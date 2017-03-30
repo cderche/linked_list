@@ -1,38 +1,79 @@
 # LinkedList
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/linked_list`. To experiment with that code, run `bin/console` for an interactive prompt.
+[![Build Status](https://travis-ci.org/cderche/linked_list.svg?branch=master)](https://travis-ci.org/cderche/linked_list)
 
-TODO: Delete this and the text above, and describe your gem
+LinkedList is a gem with one objective, allow you to easily transform any model in to a linked list. We have a couple simple commands which will allow you to be up and running quickly. It is based on the [resort](https://github.com/codegram/resort) gem, but simplified. Unlike [resort](https://github.com/codegram/resort), LinkedList takes care of siblings by attaching all objects to a `head` object.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'linked_list'
+gem 'linked_list', github: 'cderche/linked_list'
 ```
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install linked_list
+    $ bundle install
 
 ## Usage
 
-TODO: Write usage instructions here
+First, run the migration for the model you want to turn into a Linked List (Product in our example).
+```console
+$ rails g linked_list:migration product
+$ rails db:migrate
+```
+This will add the following fields to your model:
+- previous_id
+- next_id
+- head_id
 
-## Development
+Then in the Product model:
+```
+class Product < ActiveRecord::Base
+    linked_list!
+end
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+## API
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+@product1 = Product.create  # Create a product as usual
+@product2 = Product.create
+
+@product1.add(@product2)    # Adds @product2 to the @product1 linked list
+
+@product2.head              # returns the head of the list (@product1)
+
+@product1.tail              # returns the head of the list (@product2)
+
+@product1.siblings          # returns all the products with the same head
+
+@product1.next?             # checks if there is a next object (true)
+
+@product1.next              # returns the next product (@product2)
+
+@product2.previous?         # checks if there is a previous object (true)
+
+@product2.previous          # returns the previous product (@product1)
+
+@product1.first?            # returns true if the object is the first object
+
+@product1.last?             # returns true if the object is the last object
+
+# Destroying a object
+@product1.destroy           # Throw abort if object is not the tail
+```
+
+## Testing
+
+LinkedList uses cucumber-rails for testing. We create a object `Node` which extends our LinkedList and we run tests against it. To run the tests, execute:
+
+    $ cucumber
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/linked_list. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/cderche/linked_list. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
