@@ -24,7 +24,7 @@ module LinkedList
         end
 
         def siblings
-            base.class.where(head_id: head_id)
+            self.class.where(head_id: head_id)
         end
 
         def tail
