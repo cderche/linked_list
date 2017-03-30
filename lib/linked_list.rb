@@ -3,7 +3,7 @@ require 'active_record' unless defined?(ActiveRecord)
 
 module LinkedList
     class << self
-        def included
+        def included(base)
             base.send :include, InstanceMethods
 
             base.has_one       :head, class_name: base.name, foreign_key: :head_id
