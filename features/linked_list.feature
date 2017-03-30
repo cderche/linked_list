@@ -31,3 +31,14 @@ Scenario: Validating a linked list
   And object 1 should be previous to object 2
   And the first object should not have a previous
   And the last object should not have a next
+
+Scenario: Delete object if it is the tail
+  Given a list of 3 objects
+  When I try to delete object 2
+  Then the list should have 2 objects
+
+Scenario: Can't delete non-tail objects
+  Given a list of 3 objects
+  When I try to delete object 0
+  And I try to delete object 1
+  Then the list should have 3 objects

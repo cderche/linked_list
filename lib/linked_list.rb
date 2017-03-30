@@ -4,14 +4,15 @@ require 'active_record' unless defined?(ActiveRecord)
 module LinkedList
     class << self
         def included(base)
-            base.send :include, InstanceMethods
+            base.send           :include, InstanceMethods
 
-            base.has_one       :head, class_name: base.name, foreign_key: :head_id
+            base.has_one        :head, class_name: base.name, foreign_key: :head_id
 
-            base.has_one       :previous, class_name: base.name, inverse_of: :next, foreign_key: :next_id
-            base.belongs_to    :next, class_name: base.name, inverse_of: :previous, optional: true
+            base.has_one        :previous, class_name: base.name, inverse_of: :next, foreign_key: :next_id
+            base.belongs_to     :next, class_name: base.name, inverse_of: :previous, optional: true
 
-            base.after_create  :set_head, unless: :head_exists?
+            base.after_create   :set_head, unless: :head_exists?
+            base.before_destroy :before_destroy_node
         end
     end
 
@@ -55,6 +56,10 @@ module LinkedList
 
         def head_exists?
             !head.nil? || head_id?
+        end
+
+        def before_destroy_node
+            throw :abort if !last?
         end
     end
 

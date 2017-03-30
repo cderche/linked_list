@@ -1,27 +1,3 @@
-Given(/^a new list$/) do
-  expect { @head = Node.create }.to change(Node, :count).by(1)
-  @head.reload
-end
-
-Given(/^a list of (\d+) objects$/) do |arg1|
-  expect { @head = Node.create }.to change(Node, :count).by(1)
-
-  x = arg1.to_i - 1
-  x.times do |i|
-    expect { @tail = Node.create }.to change(Node, :count).by(1)
-    expect { @head.add(@tail) }.to change(@head.siblings, :count).by(1)
-    @tail.reload
-  end
-  @head.reload
-end
-
-When(/^I add a new object$/) do
-  expect { @tail = Node.create }.to change(Node, :count).by(1)
-  expect { @head.add(@tail) }.to change(@head.reload.siblings, :count).by(1)
-  @head.reload
-  @tail.reload
-end
-
 Then(/^the list should have (\d+) objects$/) do |arg1|
   expect(@head.siblings.count).to eq(arg1.to_i)
 end
