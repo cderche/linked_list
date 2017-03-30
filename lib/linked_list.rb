@@ -1,4 +1,5 @@
 require 'linked_list/version'
+require 'active_record' unless defined?(ActiveRecord)
 
 module LinkedList
     class << self
