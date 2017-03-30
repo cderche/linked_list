@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cderche/linked_list.svg?branch=master)](https://travis-ci.org/cderche/linked_list)
 
-LinkedList is a gem with one objective, allow you to easily transform any model in to a linked list. We have a couple simple commands which will allow you to be up and running quickly. It is based on the [resort](https://github.com/codegram/resort) gem, but simplified. Unlike [resort](https://github.com/codegram/resort), LinkedList takes care of siblings by attaching all objects to a `head` object.
+LinkedList is a gem with one objective, allow you to easily transform any model in to a linked list. We have a couple simple commands which will allow you to be up and running quickly. It is based on the [resort](https://github.com/codegram/resort) gem, but simplified. Unlike [resort](https://github.com/codegram/resort), LinkedList takes care of siblings by attaching all objects to a `head` object. This gem is meant as a building block for a more sophisticated publishing gem (coming soon).
 
 ## Installation
 
