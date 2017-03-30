@@ -1,7 +1,7 @@
 Feature: Linked List Object
 
 Scenario: Creating a linked list
-  Given a new list
+  Given a list of 1 objects
   Then the list should have 1 objects
   And the head should be the current object
   And the tail should be the current object

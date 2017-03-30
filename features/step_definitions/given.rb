@@ -1,8 +1,3 @@
-Given(/^a new list$/) do
-  expect { @head = Node.create }.to change(Node, :count).by(1)
-  @head.reload
-end
-
 Given(/^a list of (\d+) objects$/) do |arg1|
   expect { @head = Node.create }.to change(Node, :count).by(1)
 
